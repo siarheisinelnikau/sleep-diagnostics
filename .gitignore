@@ -1,0 +1,8 @@
+/target/
+/dist/
+*.pdb
+.env
+.env.*
+!.env.example
+/.test-output/
+*.log
