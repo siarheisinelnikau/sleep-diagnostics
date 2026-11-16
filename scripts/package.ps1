@@ -41,4 +41,7 @@ foreach ($dependency in $metadata.packages | Where-Object { $_.source }) {
     $attributions.Add("$($dependency.name) $($dependency.version) | $($dependency.license)")
 }
 [IO.File]::WriteAllLines((Join-Path $outputDirectory 'THIRD-PARTY-LICENSES.txt'), $attributions, [Text.UTF8Encoding]::new($false))
+$bundlePath = Join-Path $outputDirectory "SleepDiagnostics-v$($package.version)-portable.zip"
+$bundleFiles = @($assetPath, "$assetPath.sha256", (Join-Path $outputDirectory 'LICENSE'), (Join-Path $outputDirectory 'THIRD-PARTY-LICENSES.txt'), (Join-Path $outputDirectory 'licenses'))
+Compress-Archive -LiteralPath $bundleFiles -DestinationPath $bundlePath -CompressionLevel Optimal -Force
 Write-Output "Prepared $assetName and its SHA-256 checksum. No application was launched."
